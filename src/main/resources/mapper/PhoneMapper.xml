@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.PhoneMapper">
+
+	<select id="getPhoneByModel" resultType="com.example.millgo.dto.Phone">
+		SELECT *
+		FROM phone
+		WHERE model=#{model}
+	</select>
+	
+	<select id="getTotalPhoneNum">
+		SELECT COUNT(*)
+		FROM phone
+	</select>
+	
+	<select id="getTotalPhone" resultType="map">
+		SELECT *
+		FROM phone
+	</select>
+	
+	<select id="getPhoneListByPageNum" resultType="map">
+		select *
+		from attachment
+		as a left join board 
+		as b on a.a_bnumber = b.b_number
+		LIMIT #{a_start}, #{a_limit}
+	</select>
+	
+	<insert id="insertPhone" useGeneratedKeys="true" keyProperty="model">
+		INSERT INTO phone (model, price, volume) VALUES
+		(#{model}, #{price}, #{volume})
+	</insert>
+	
+	<update id="updatePhone">
+		UPDATE phone set price=#{price}, volume=#{volume}, quantity=#{quantity}
+		WHERE model=#{model}
+	</update>
+	
+	<delete id="deletePhoneByModel">
+		DELETE FROM phone
+		WHERE model=#{model}
+	</delete>
+	
+</mapper>
